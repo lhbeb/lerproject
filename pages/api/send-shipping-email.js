@@ -1,5 +1,28 @@
 import nodemailer from 'nodemailer';
 
+// Create a persistent SMTP transporter (connection pool)
+let transporter = null;
+
+function getTransporter() {
+  if (!transporter) {
+    console.log('Creating new SMTP transporter...');
+    transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // Use SSL
+      pool: true, // Use connection pooling
+      maxConnections: 5, // Maximum concurrent connections
+      maxMessages: 100, // Maximum messages per connection
+      auth: {
+        user: 'contacthappydeel@gmail.com',
+        pass: 'pqdc drxx ltlo xapr',
+      },
+    });
+    console.log('SMTP transporter created with connection pooling!');
+  }
+  return transporter;
+}
+
 // Authentication middleware
 function checkAuth(req) {
   const { session } = req.cookies;
@@ -63,21 +86,8 @@ export default async function handler(req, res) {
     console.log('Gmail Pass exists:', true);
     console.log('Gmail Pass length:', 19);
 
-    // Create transporter with Gmail SMTP (hardcoded credentials)
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true, // Use SSL
-      auth: {
-        user: 'contacthappydeel@gmail.com',
-        pass: 'pqdc drxx ltlo xapr',
-      },
-    });
-
-    // Test the connection
-    console.log('Testing SMTP connection...');
-    await transporter.verify();
-    console.log('SMTP connection successful!');
+    // Get the persistent transporter (no need to verify each time)
+    const emailTransporter = getTransporter();
 
     // Generate tracking URL (placeholder - you can customize this based on your shipping provider)
     const trackingUrl = `https://www.fedex.com/fedextrack/?trknbr=${trackingNumber}`;
@@ -110,15 +120,6 @@ export default async function handler(req, res) {
               
               <!-- Main Container -->
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; background: #ffffff !important; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08); color-scheme: light only;">
-                
-                <!-- Header - Logo Section -->
-            <tr>
-              <td style="background-color: #ffffff !important; padding: 24px 32px; text-align: center; border-bottom: 1px solid #e2e8f0;">
-                <a href="https://www.happydeel.com/" style="display: inline-block; text-decoration: none;">
-                  <img src="https://i.ibb.co/hnHJz4s/logomail.png" alt="HappyDeal" style="height: 48px; width: auto; display: block; margin: 0 auto; max-width: 100%;">
-                </a>
-              </td>
-            </tr>
                 
                 <!-- Header - Title Section -->
                 <tr>
@@ -358,7 +359,7 @@ export default async function handler(req, res) {
     };
 
     // Send email
-    const info = await transporter.sendMail(mailOptions);
+    const info = await emailTransporter.sendMail(mailOptions);
     
     console.log('Email sent successfully:', info.messageId);
     

@@ -91,6 +91,7 @@ export default async function handler(req, res) {
             padding: 48px 32px; 
             text-align: center; 
             position: relative;
+            overflow: hidden;
           }
           .header-section::before {
             content: '';
@@ -151,6 +152,18 @@ export default async function handler(req, res) {
             font-size: 32px;
             box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
             position: relative;
+            z-index: 1;
+            line-height: 1;
+            text-align: center;
+          }
+          .success-icon::before {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
           }
           .refund-title {
             font-size: 28px;
@@ -272,18 +285,31 @@ export default async function handler(req, res) {
             margin-bottom: 0;
           }
           .timeline-number {
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
-            color: white;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             margin-right: 12px;
             flex-shrink: 0;
+            text-align: center;
+            line-height: 1;
+            padding: 0;
+            position: relative;
+          }
+          .timeline-number::before {
+            content: attr(data-number);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: 700;
           }
           .timeline-content {
             color: #1e3a8a;
@@ -333,17 +359,198 @@ export default async function handler(req, res) {
             padding-top: 16px;
             border-top: 1px solid #e5e7eb;
           }
-          @media (max-width: 600px) {
-            .container { margin: 16px; }
-            .header-section { padding: 32px 24px; }
-            .content { padding: 32px 24px; }
-            .refund-card { padding: 24px; }
-            .refund-details { padding: 20px; }
-            .timeline { padding: 20px; }
-            .footer { padding: 24px; }
-            .contact-info { flex-direction: column; gap: 12px; }
-            .detail-row { flex-direction: column; align-items: flex-start; gap: 4px; }
-            .detail-value { max-width: 100%; text-align: left; }
+          @media (max-width: 768px) {
+            .container { 
+              margin: 0 !important; 
+              width: 100% !important;
+              max-width: 100% !important;
+              border-radius: 0 !important;
+              box-shadow: none !important;
+            }
+            .header-section { 
+              padding: 24px 16px !important; 
+              position: relative !important;
+            }
+            .header-section::before {
+              z-index: 0 !important;
+            }
+            .header-title {
+              font-size: 24px !important;
+              z-index: 2 !important;
+              position: relative !important;
+            }
+            .content { 
+              padding: 24px 16px !important; 
+            }
+            .refund-card { 
+              padding: 20px 16px !important; 
+              margin-bottom: 24px !important;
+            }
+            .refund-details { 
+              padding: 16px !important; 
+              margin-bottom: 24px !important;
+            }
+            .timeline { 
+              padding: 16px !important; 
+              margin-bottom: 24px !important;
+            }
+            .footer { 
+              padding: 20px 16px !important; 
+            }
+            
+            /* Perfect centering for success icon */
+            .success-icon {
+              width: 60px !important;
+              height: 60px !important;
+              margin: 0 auto 20px auto !important;
+              position: static !important;
+              transform: none !important;
+              left: auto !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              z-index: 2 !important;
+              font-size: 24px !important;
+            }
+            
+            /* Fix refund titles */
+            .refund-title {
+              font-size: 20px !important;
+              text-align: center !important;
+              margin-bottom: 12px !important;
+              word-break: break-word !important;
+              line-height: 1.3 !important;
+            }
+            .refund-subtitle {
+              font-size: 14px !important;
+              text-align: center !important;
+              padding: 0 8px !important;
+              line-height: 1.4 !important;
+            }
+            
+            /* Fix amount display */
+            .amount-display {
+              padding: 16px !important;
+              text-align: center !important;
+            }
+            .amount-value {
+              font-size: 24px !important;
+              word-break: break-word !important;
+            }
+            
+            /* Perfect detail rows */
+            .detail-row { 
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 4px !important;
+              padding: 8px 0 !important;
+              border-bottom: 1px solid #f3f4f6 !important;
+            }
+            .detail-label {
+              font-size: 12px !important;
+              margin-right: 0 !important;
+              margin-bottom: 2px !important;
+            }
+            .detail-value { 
+              width: 100% !important;
+              max-width: 100% !important;
+              text-align: left !important;
+              word-break: break-word !important;
+              font-size: 14px !important;
+            }
+            
+            /* Perfect timeline alignment */
+            .timeline-item {
+              display: flex !important;
+              align-items: flex-start !important;
+              margin-bottom: 16px !important;
+              padding: 0 !important;
+            }
+            .timeline-number {
+              width: 20px !important;
+              height: 20px !important;
+              font-size: 10px !important;
+              margin-right: 12px !important;
+              flex-shrink: 0 !important;
+              position: static !important;
+              top: auto !important;
+              transform: none !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              z-index: 1 !important;
+            }
+            .timeline-content {
+              flex: 1 !important;
+              font-size: 13px !important;
+              line-height: 1.4 !important;
+              word-break: break-word !important;
+            }
+            
+            /* Perfect contact info */
+            .contact-info {
+              display: flex !important;
+              flex-direction: column !important;
+              align-items: center !important;
+              gap: 8px !important;
+              text-align: center !important;
+            }
+            .contact-link {
+              font-size: 13px !important;
+              word-break: break-word !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .header-section { 
+              padding: 20px 12px !important; 
+            }
+            .content { 
+              padding: 20px 12px !important; 
+            }
+            .refund-card { 
+              padding: 16px 12px !important; 
+            }
+            .refund-details { 
+              padding: 12px !important; 
+            }
+            .timeline { 
+              padding: 12px !important; 
+            }
+            .footer { 
+              padding: 16px 12px !important; 
+            }
+            .header-title {
+              font-size: 20px !important;
+            }
+            .refund-title {
+              font-size: 18px !important;
+            }
+            .amount-value {
+              font-size: 20px !important;
+            }
+          }
+          
+          @media (max-width: 320px) {
+            .header-section { 
+              padding: 16px 8px !important; 
+            }
+            .content { 
+              padding: 16px 8px !important; 
+            }
+            .refund-card { 
+              padding: 12px 8px !important; 
+            }
+            .header-title {
+              font-size: 18px !important;
+            }
+            .refund-title {
+              font-size: 16px !important;
+            }
+            .amount-value {
+              font-size: 18px !important;
+            }
           }
         </style>
       </head>
@@ -358,12 +565,7 @@ export default async function handler(req, res) {
             <p style="font-size: 18px; margin-bottom: 32px; color: #374151;">Dear ${customerName},</p>
             
             <div class="refund-card">
-              <div class="success-icon">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="18" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                    <path d="M12 20L17 25L28 14" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                  </svg>
-                </div>
+              <div class="success-icon"></div>
               <h2 class="refund-title">Your Order Has Been Successfully Refunded</h2>
               <p class="refund-subtitle">We have processed a full refund for your order. The refund amount will appear in your original payment method.</p>
               
@@ -396,15 +598,15 @@ export default async function handler(req, res) {
             <div class="timeline">
               <h3>What happens next?</h3>
               <div class="timeline-item">
-                <div class="timeline-number">1</div>
+                <div class="timeline-number" data-number="1"></div>
                 <div class="timeline-content">Your full refund has been processed by our team</div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-number">2</div>
+                <div class="timeline-number" data-number="2"></div>
                 <div class="timeline-content">The full refund amount will appear in your original payment method within 3-5 business days</div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-number">3</div>
+                <div class="timeline-number" data-number="3"></div>
                 <div class="timeline-content">You'll see the transaction reflected in your account statement</div>
               </div>
             </div>

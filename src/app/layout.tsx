@@ -7,6 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Happydeel Email Dashboard",
   description: "Manage and send transactional emails",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({

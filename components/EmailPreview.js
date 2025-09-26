@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 export default function EmailPreview() {
   const [selectedTemplate, setSelectedTemplate] = useState('tracking');
-  const [emailContent, setEmailContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [message, setMessage] = useState({ type: '', content: '' });
 
   // Sample data for previews
   const sampleData = {
@@ -34,6 +34,7 @@ export default function EmailPreview() {
   const generatePreview = async (templateType) => {
     setIsLoading(true);
     setError('');
+    setMessage({ type: '', content: '' });
     
     try {
       let endpoint;
@@ -61,7 +62,19 @@ export default function EmailPreview() {
       }
 
       const result = await response.json();
-      setEmailContent(result.htmlContent);
+      
+      // Open preview in new window instead of embedding in the page
+      if (result.htmlContent) {
+        const previewWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
+        previewWindow.document.write(result.htmlContent);
+        previewWindow.document.close();
+        setMessage({
+          type: 'success',
+          content: '✅ Preview opened in a new tab!'
+        });
+      } else {
+        throw new Error('No HTML content received');
+      }
     } catch (err) {
       setError('Failed to generate email preview: ' + err.message);
     } finally {
@@ -71,8 +84,8 @@ export default function EmailPreview() {
 
   const handleTemplateChange = (templateType) => {
     setSelectedTemplate(templateType);
-    setEmailContent('');
     setError('');
+    setMessage({ type: '', content: '' });
   };
 
   return (
@@ -146,31 +159,21 @@ export default function EmailPreview() {
           </div>
         </div>
 
+        {/* Success Message */}
+        {message.content && (
+          <div className={`mb-6 p-4 rounded-lg ${
+            message.type === 'success' 
+              ? 'bg-green-50 text-green-800 border border-green-200' 
+              : 'bg-blue-50 text-blue-800 border border-blue-200'
+          }`}>
+            {message.content}
+          </div>
+        )}
+
         {/* Error Display */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-700">❌ {error}</p>
-          </div>
-        )}
-
-        {/* Email Preview */}
-        {emailContent && (
-          <div className="border border-gray-300 rounded-lg overflow-hidden">
-            <div className="bg-gray-100 px-4 py-2 border-b border-gray-300">
-              <h3 className="text-lg font-semibold text-gray-700">
-                📧 Email Preview - {
-                  selectedTemplate === 'tracking' ? 'Tracking Number' : 
-                  selectedTemplate === 'orderConfirmation' ? 'Order Confirmation' :
-                  'Refund Confirmation'
-                }
-              </h3>
-            </div>
-            <div className="p-4 bg-white max-h-96 overflow-y-auto">
-              <div 
-                dangerouslySetInnerHTML={{ __html: emailContent }}
-                className="email-preview"
-              />
-            </div>
           </div>
         )}
 
@@ -180,7 +183,7 @@ export default function EmailPreview() {
           <ul className="text-blue-700 space-y-1 text-sm">
             <li>1. Select the email template type you want to preview</li>
             <li>2. Click "Generate Preview" to see the email with sample data</li>
-            <li>3. The preview shows exactly how the email will look when sent</li>
+            <li>3. The preview will open in a new tab to avoid layout issues</li>
             <li>4. No actual emails are sent during preview</li>
           </ul>
         </div>

@@ -100,7 +100,7 @@ export default async function handler(req, res) {
             box-sizing: border-box;
           }
           body { 
-            font-family: Helvetica, Arial, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
             line-height: 1.6; 
             color: #374151; 
             margin: 0; 

@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
     console.log('=== SENDING EMAIL ===');
     const mailOptions = {
-      from: `"HappyDeal" <${process.env.GMAIL_USER}>`,
+      from: `"Happydeel" <${process.env.GMAIL_USER}>`,
       to: customerEmail,
       subject: `Test Email - ${productName}`,
       text: `Hello! Your product ${productName} with tracking ${trackingNumber} has been shipped.`,

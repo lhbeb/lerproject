@@ -89,10 +89,10 @@ export default async function handler(req, res) {
     // Get the persistent transporter (no need to verify each time)
     const emailTransporter = getTransporter();
 
-    // Generate tracking URL (placeholder - you can customize this based on your shipping provider)
+    // Generate FedEx tracking URL
     const trackingUrl = `https://www.fedex.com/fedextrack/?trknbr=${trackingNumber}`;
 
-    // HTML email template - Premium HappyDeal Design (Fully Responsive)
+    // HTML email template - HappyDeel Branded Design (Fully Responsive)
     const htmlTemplate = `
       <!DOCTYPE html>
       <html lang="en">
@@ -100,7 +100,7 @@ export default async function handler(req, res) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no">
-        <title>Your Order Has Shipped - HappyDeal</title>
+        <title>Your Order Has Shipped - HappyDeel</title>
         <!--[if mso]>
         <noscript>
           <xml>
@@ -111,24 +111,24 @@ export default async function handler(req, res) {
         </noscript>
         <![endif]-->
       </head>
-      <body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; color: #1e293b; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+      <body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; color: #1e293b; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
         
         <!-- Wrapper Table for Email Client Compatibility -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
           <tr>
             <td align="center" style="padding: 20px 10px;">
               
               <!-- Main Container -->
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; background: #ffffff !important; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08); color-scheme: light only;">
                 
-                <!-- Header - Title Section -->
+                <!-- Header -->
                 <tr>
-                  <td style="background-color: #ffffff !important; padding: 32px 32px 24px 32px; text-align: center;">
-                    <h1 style="color: #1e293b !important; font-size: 28px; font-weight: 700; margin: 0 0 8px 0; line-height: 1.2;">
-                      📦 Your Order Has Shipped!
+                  <td style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%) !important; padding: 40px 32px; text-align: center;">
+                    <h1 style="color: white !important; font-size: 32px; font-weight: 700; margin: 0 0 12px 0; line-height: 1.2;">
+                      🚀 Your Order Has Shipped!
                     </h1>
-                    <p style="color: #64748b !important; font-size: 16px; margin: 0; line-height: 1.5;">
-                      Your carefully inspected premium tech is now on its way. We've ensured it meets our rigorous quality standards.
+                    <p style="color: rgba(255, 255, 255, 0.95) !important; font-size: 16px; margin: 0; line-height: 1.5; font-weight: 500;">
+                      Your item is on its way — expertly inspected and ready for you
                     </p>
                   </td>
                 </tr>
@@ -159,7 +159,7 @@ export default async function handler(req, res) {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
                       <tr>
                         <td style="color: #475569; font-size: 16px; line-height: 1.6; text-align: left;">
-                          Your carefully inspected premium tech is now on its way. We've ensured it meets our rigorous quality standards.
+                          Your carefully inspected item is now on its way. We've ensured it meets our rigorous quality standards.
                         </td>
                       </tr>
                     </table>
@@ -245,8 +245,8 @@ export default async function handler(req, res) {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #dbeafe, #bfdbfe) !important; border-radius: 16px; border: 1px solid #93c5fd; margin: 32px 0;">
                       <tr>
                         <td style="padding: 28px 24px; text-align: center; background-color: transparent !important;">
-                          <h3 style="color: #1e40af !important; font-size: 20px; font-weight: 700; margin: 0 0 8px 0;">Track Your Package</h3>
-                          <p style="color: #475569 !important; font-size: 16px; margin: 0 0 20px 0;">FedEx Express Delivery</p>
+                          <h3 style="color: #1e40af !important; font-size: 20px; font-weight: 700; margin: 0 0 8px 0;">🚚 Track Your Package</h3>
+                          <p style="color: #475569 !important; font-size: 16px; margin: 0 0 20px 0;">Your package is on its way!</p>
                           
                           <!-- Tracking Number -->
                           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 16px 0;">
@@ -257,13 +257,11 @@ export default async function handler(req, res) {
                             </tr>
                           </table>
                           
-                          <!-- Track Button -->
-                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 16px auto 0 auto;">
+                          <!-- Track Package Button -->
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 20px auto 0 auto;">
                             <tr>
-                              <td style="background: linear-gradient(135deg, #3b82f6, #1e40af) !important; border-radius: 12px; border: 1px solid #2563eb;">
-                                <a href="${trackingUrl}" style="display: block; color: #ffffff !important; padding: 14px 28px; text-decoration: none; font-weight: 600; font-size: 16px; text-align: center;">
-                                  Track Package &rarr;
-                                </a>
+                              <td style="background: #dc2626 !important; border-radius: 8px; text-align: center;">
+                                <a href="${trackingUrl}" style="display: inline-block; padding: 14px 28px; color: #ffffff !important; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 8px;">Track Package</a>
                               </td>
                             </tr>
                           </table>
@@ -275,7 +273,7 @@ export default async function handler(req, res) {
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 32px 0;">
                       <tr>
                         <td style="color: #475569; font-size: 16px; line-height: 1.6; text-align: left;">
-                          Questions about your order? Our support team is here to help. Thank you for choosing HappyDeal.
+                          We take the risk out of used gear with expert inspection and reliable service on every order. Questions about your order? Our support team is here to help. Thank you for choosing <strong>HappyDeel</strong>!
                         </td>
                       </tr>
                     </table>
@@ -285,28 +283,27 @@ export default async function handler(req, res) {
                 
                 <!-- Footer -->
                 <tr>
-                  <td style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); padding: 32px 24px; text-align: center; border-top: 1px solid #cbd5e1;">
-                    <div style="color: #3b82f6; font-size: 20px; font-weight: 700; margin: 0 0 8px 0;">HappyDeal</div>
-                    <div style="color: #64748b; font-size: 16px; margin: 0 0 20px 0; font-weight: 500;">The smart way to buy premium tech for less</div>
+                  <td style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 32px 24px; text-align: center;">
+                    <div style="color: rgba(255, 255, 255, 0.9) !important; font-size: 16px; margin: 0 0 20px 0; font-weight: 500;">The smart way to buy quality items — for less.</div>
                     
                     <!-- Footer Links -->
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 20px auto;">
                       <tr>
                         <td style="padding: 0 12px;">
-                          <a href="https://www.happydeel.com/contact" style="color: #475569 !important; text-decoration: none; font-size: 14px; font-weight: 500;">Support</a>
+                          <a href="https://www.happydeel.com/contact" style="color: rgba(255, 255, 255, 0.8) !important; text-decoration: none; font-size: 14px; font-weight: 500;">Support</a>
                         </td>
                         <td style="padding: 0 12px;">
-                          <a href="https://www.happydeel.com/track" style="color: #475569 !important; text-decoration: none; font-size: 14px; font-weight: 500;">Track Orders</a>
+                          <a href="https://www.happydeel.com/track" style="color: rgba(255, 255, 255, 0.8) !important; text-decoration: none; font-size: 14px; font-weight: 500;">Track Orders</a>
                         </td>
                         <td style="padding: 0 12px;">
-                          <a href="https://www.happydeel.com/return-policy" style="color: #475569 !important; text-decoration: none; font-size: 14px; font-weight: 500;">Returns</a>
+                          <a href="https://www.happydeel.com/return-policy" style="color: rgba(255, 255, 255, 0.8) !important; text-decoration: none; font-size: 14px; font-weight: 500;">Returns</a>
                         </td>
                       </tr>
                     </table>
                     
-                    <div style="color: #64748b; font-size: 12px; margin-top: 24px; line-height: 1.4;">
+                    <div style="color: rgba(255, 255, 255, 0.7) !important; font-size: 12px; margin-top: 24px; line-height: 1.4;">
                       This email was sent to ${customerEmail}<br>
-                      HappyDeal • Premium Pre-Owned Technology
+                      © 2024 HappyDeel. All rights reserved.
                     </div>
                   </td>
                 </tr>
@@ -323,11 +320,11 @@ export default async function handler(req, res) {
 
     // Plain text version for email clients that don't support HTML
     const textTemplate = `
-      HappyDeal - Your Order Has Shipped!
+      HappyDeel - Your Order Has Shipped!
       
-      Premium tech, expertly curated
+      The smart way to buy premium tech, cameras, and bikes — for less.
       
-      SHIPPED - Your carefully inspected premium tech is now on its way. We've ensured it meets our rigorous quality standards.
+      SHIPPED - Your item is on its way — expertly inspected and ready for you.
       
       Order Details:
       Product: ${productName}
@@ -336,22 +333,22 @@ export default async function handler(req, res) {
       Status: In Transit (3-7 Business Days)
       
       Tracking Information:
-      FedEx Express Delivery
+      Your package is on its way!
       Tracking Number: ${trackingNumber}
       Track your package: ${trackingUrl}
       
-      Questions about your order? Our support team is here to help. Thank you for choosing HappyDeal.
+      Questions about your order? Our support team is here to help. Thank you for choosing Happydeel.
       
       ---
-      HappyDeal - The smart way to buy premium tech for less
+      Happydeel - The smart way to buy quality items for less
       
       This email was sent to ${customerEmail}
-      HappyDeal • Premium Pre-Owned Technology
+      Happydeel • Premium Pre-Owned Technology
     `;
 
     // Email options
     const mailOptions = {
-      from: `"HappyDeal" <contacthappydeel@gmail.com>`,
+      from: `"Happydeel" <contacthappydeel@gmail.com>`,
       to: customerEmail,
       subject: `Your Order Has Shipped! 📦 - ${productName}`,
       text: textTemplate,

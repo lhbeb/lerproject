@@ -1,4 +1,4 @@
-# 📦 HappyDeal Shipping Dashboard
+# 📦 Happydeel Shipping Dashboard
 
 A professional shipping confirmation email web application built with Next.js, TailwindCSS, and Gmail SMTP integration.
 
@@ -65,7 +65,7 @@ npm install
 2. Under "2-Step Verification", click **App passwords**
 3. Select **Mail** as the app
 4. Select **Other (Custom name)** as the device
-5. Enter "HappyDeal Shipping" as the name
+5. Enter "Happydeel Shipping" as the name
 6. Click **Generate**
 7. Copy the 16-character app password (format: xxxx xxxx xxxx xxxx)
 
@@ -106,7 +106,7 @@ The application will be available at `http://localhost:3000` (or the next availa
 
 The generated emails include:
 
-- **Professional Branding**: HappyDeal branded header
+- **Professional Branding**: Happydeel branded header
 - **Order Details**: Product name and customer information
 - **Tracking Information**: Tracking number with clickable tracking link
 - **Responsive Design**: Looks great on desktop and mobile

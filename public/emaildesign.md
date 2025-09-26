@@ -11,7 +11,7 @@
         <!-- Header - Bottom Blue Div for Title and Tagline -->
         <div style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 50%, #1e3a8a 100%); padding: 32px; text-align: center; position: relative; overflow: hidden; color: #ffffff;">
             <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.5px;">Your Order Has Shipped</h1>
-            <p style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin: 8px 0 0 0; font-weight: 500;">Premium tech, expertly curated</p>
+            <p style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin: 8px 0 0 0; font-weight: 500;">Quality items, expertly curated</p>
         </div>
         
         <!-- Content Section -->
@@ -24,7 +24,7 @@
             </div>
             
             <div style="color: #475569; font-size: 16px; margin-bottom: 24px; line-height: 1.6;">
-                Your carefully inspected premium tech is now on its way. We've ensured it meets our rigorous quality standards.
+                Your carefully inspected item is now on its way. We've ensured it meets our rigorous quality standards.
             </div>
             
             <!-- Order Card -->
@@ -78,7 +78,7 @@
         <!-- Footer -->
         <div style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); padding: 32px; text-align: center; border-top: 1px solid #cbd5e1;">
             <div style="color: #3b82f6; font-size: 18px; font-weight: 700; margin: 0 0 8px 0;">HappyDeal</div>
-            <div style="color: #64748b; font-size: 14px; margin: 0 0 20px 0; font-weight: 500;">The smart way to buy premium tech for less</div>
+            <div style="color: #64748b; font-size: 14px; margin: 0 0 20px 0; font-weight: 500;">The smart way to buy quality items for less</div>
             <div style="display: flex; justify-content: center; gap: 24px; margin: 20px 0;">
                 <a href="#" style="color: #475569; text-decoration: none; font-size: 13px; font-weight: 500;">Support</a>
                 <a href="#" style="color: #475569; text-decoration: none; font-size: 13px; font-weight: 500;">Track Orders</a>

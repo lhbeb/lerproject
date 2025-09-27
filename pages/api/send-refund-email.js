@@ -142,7 +142,7 @@ export default async function handler(req, res) {
                             <tr>
                               <td>
                                 <div style="font-size: 14px; color: #6b7280; margin-bottom: 8px; font-weight: 500;">Full Refund Amount</div>
-                                <div style="font-size: 32px; font-weight: 700; color: #1e3a8a;">${amount.toFixed(2)}</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #1e3a8a;">$${amount.toFixed(2)}</div>
                               </td>
                             </tr>
                           </table>
@@ -165,7 +165,7 @@ export default async function handler(req, res) {
                             </tr>
                             <tr>
                               <td class="detail-row-label" width="150" style="color: #6b7280; font-size: 14px; font-weight: 500; padding: 8px 0;">Refund Amount</td>
-                              <td class="detail-row-value" style="color: #1e3a8a; font-weight: 700; text-align: right;">${amount.toFixed(2)}</td>
+                              <td class="detail-row-value" style="color: #1e3a8a; font-weight: 700; text-align: right;">$${amount.toFixed(2)}</td>
                             </tr>
                             <tr>
                               <td class="detail-row-label" width="150" style="color: #6b7280; font-size: 14px; font-weight: 500; padding: 8px 0;">Status</td>

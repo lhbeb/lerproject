@@ -8,10 +8,86 @@ import EmailPreview from '../../components/EmailPreview';
 import LoginForm from '../../components/LoginForm';
 
 export default function Home() {
-  // Remove authentication requirement since email endpoints no longer need auth
   const [activeTab, setActiveTab] = useState('tracking');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
-  // Removed authentication logic - email endpoints no longer require auth
+  // Check authentication status on component mount
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/auth-check');
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(true);
+        setUser(data.user);
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      setIsAuthenticated(false);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLoginSuccess = (userData: any) => {
+    setIsAuthenticated(true);
+    setUser(userData);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/logout', { method: 'POST' });
+      setIsAuthenticated(false);
+      setUser(null);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-slate-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <main className="min-h-screen bg-slate-50">
+        <header className="bg-white shadow-sm">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <img
+                src="/logo.png"
+                alt="Happydeel"
+                className="h-12 w-auto"
+              />
+            </div>
+          </div>
+        </header>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex justify-center">
+            <div className="w-full max-w-md">
+              <LoginForm onLoginSuccess={handleLoginSuccess} />
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -23,6 +99,15 @@ export default function Home() {
               alt="Happydeel"
               className="h-12 w-auto"
             />
+            <div className="flex items-center gap-4">
+               <span className="text-sm text-slate-600">Welcome, {user || 'Admin'}</span>
+               <button
+                 onClick={handleLogout}
+                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+               >
+                 Logout
+               </button>
+             </div>
           </div>
         </div>
       </header>

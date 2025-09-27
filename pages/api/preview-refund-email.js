@@ -25,11 +25,11 @@ function checkAuth(req) {
 }
 
 export default async function handler(req, res) {
-  // Check authentication
-  const auth = checkAuth(req);
-  if (!auth.authenticated) {
-    return res.status(401).json({ error: auth.error });
-  }
+  // Authentication bypassed for email previews
+  // const auth = checkAuth(req);
+  // if (!auth.authenticated) {
+  //   return res.status(401).json({ error: auth.error });
+  // }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });

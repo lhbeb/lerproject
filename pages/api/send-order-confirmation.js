@@ -81,7 +81,7 @@ export default async function handler(req, res) {
     // Get the email transporter
     const emailTransporter = getTransporter();
 
-    // HTML email template - HappyDeel Branded
+    // HTML email template - HappyDeel Branded with Modern Design
     const htmlTemplate = `
       <!DOCTYPE html>
       <html lang="en">
@@ -90,112 +90,301 @@ export default async function handler(req, res) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Order Confirmation - HappyDeel</title>
         <style>
-          @media screen and (max-width: 600px) {
-            .content-cell {
-              padding: 20px !important;
-            }
-            .header h1 {
-              font-size: 24px !important;
-            }
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+          body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; 
+            line-height: 1.6; 
+            color: #374151; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f9fafb; 
+          }
+          .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: #ffffff; 
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+          }
+          .header { 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); 
+            color: white; 
+            padding: 48px 32px; 
+            text-align: center; 
+            position: relative;
+          }
+          .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+          }
+          .header-title { 
+            font-size: 32px; 
+            font-weight: 700; 
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+          }
+          .header-subtitle { 
+            font-size: 18px; 
+            opacity: 0.9;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+          }
+          .content { 
+            padding: 48px 32px; 
+          }
+          .confirmation-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+          }
+          .confirmation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #ffef02);
+          }
+          .confirmation-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+          }
+          .order-info {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          }
+          .order-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+          }
+          .order-detail {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 4px;
+          }
+          .next-steps {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          }
+          .next-steps h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+          }
+          .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+          }
+          .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+          }
+          .step-content {
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+          .delivery-info {
+            background: #fef3c7;
+            border: 1px solid #ffef02;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+          }
+          .delivery-info h3 {
+            color: #92400e;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+          }
+          .delivery-info p {
+            color: #78350f;
+            font-size: 14px;
+            margin: 0;
+          }
+          .footer { 
+            background: #f8fafc; 
+            padding: 32px; 
+            text-align: center; 
+            border-top: 1px solid #e5e7eb;
+          }
+          .footer-content h3 { 
+            color: #1f2937; 
+            font-size: 18px; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+          }
+          .footer-content p { 
+            color: #6b7280; 
+            font-size: 14px; 
+            margin-bottom: 16px; 
+          }
+          .contact-info { 
+            display: flex; 
+            justify-content: center; 
+            gap: 24px; 
+            margin-bottom: 24px; 
+            flex-wrap: wrap;
+          }
+          .contact-link { 
+            color: #3b82f6; 
+            text-decoration: none; 
+            font-weight: 500; 
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+          }
+          .contact-link:hover { 
+            color: #1e3a8a; 
+          }
+          .copyright { 
+            color: #9ca3af; 
+            font-size: 12px; 
+            line-height: 1.5; 
           }
         </style>
       </head>
-      <body style="margin: 0; padding: 0; background-color: #f8f9fa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333;">
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td style="padding: 20px 0; background-color: #f8f9fa;">
-              <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0;">
-                <!-- Header -->
-                <tr class="header">
-                  <td style="background-color: #1e3a8a; color: white; padding: 40px 30px; text-align: center;">
-                    <h1 style="margin: 0; font-size: 32px; font-weight: 700;">Thank You for Your Purchase!</h1>
-                    <p style="margin: 15px 0 0 0; font-size: 16px; opacity: 0.95; font-weight: 500;">Your order has been confirmed and is being processed</p>
-                  </td>
-                </tr>
-                <!-- Main Content -->
-                <tr>
-                  <td class="content-cell" style="padding: 40px 30px; background-color: #ffffff;">
-                    <p style="font-size: 18px; margin-bottom: 25px;">Dear Customer,</p>
-                    <p style="font-size: 16px; margin-bottom: 20px;">Thank you for choosing <strong>HappyDeel</strong> — the smart way to buy quality items for less! We're excited to confirm that we've received your order and it's being prepared for shipment.</p>
-                    
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #eff6ff; border-radius: 12px; margin: 25px 0; border-left: 4px solid #3b82f6;">
-                      <tr>
-                        <td style="padding: 25px;">
-                          <h3 style="margin-top: 0; color: #1e3a8a; font-size: 20px; font-weight: 600;">📋 Order Details</h3>
-                          <p style="margin: 15px 0;"><strong>Product:</strong> <span style="color: #3b82f6; font-weight: 600;">${productName}</span></p>
-                          <p style="margin: 15px 0;"><strong>Delivery Address:</strong><br>
-                          <span style="background-color: #f1f5f9; padding: 8px; border-radius: 4px; display: inline-block; margin-top: 5px;">${customerAddress.replace(/\n/g, '<br>')}</span></p>
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <h3 style="color: #1e3a8a; font-size: 18px; margin-top: 30px;">🚀 What happens next?</h3>
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; border-radius: 8px; margin: 20px 0;">
-                      <tr>
-                        <td style="padding: 20px;">
-                          <ul style="margin: 0; padding-left: 20px;">
-                            <li style="margin: 8px 0; padding-left: 10px;">✅ Your order is now being processed by our expert team</li>
-                            <li style="margin: 8px 0; padding-left: 10px;">🔍 We'll carefully inspect and package your item with our reliable service</li>
-                            <li style="margin: 8px 0; padding-left: 10px;">📧 In <span style="color: #3b82f6; font-weight: 600; background-color: #eff6ff; padding: 2px 6px; border-radius: 4px;">2-3 business days</span>, you'll receive another email with your tracking number</li>
-                            <li style="margin: 8px 0; padding-left: 10px;">📦 Once shipped, you can track your package in real-time</li>
-                          </ul>
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <p style="margin: 25px 0;">We take the risk out of used gear with expert inspection and reliable service on every order.</p>
-                    <p style="margin: 20px 0;">If you have any questions about your order, please don't hesitate to contact our support team.</p>
-                    <p style="margin: 25px 0 10px 0; font-size: 16px;">Thank you for choosing HappyDeel!</p>
-                    <p style="margin: 0;">Best regards,<br>
-                    <strong style="color: #3b82f6;">The HappyDeel Team</strong></p>
-                  </td>
-                </tr>
-                <!-- Footer -->
-                <tr>
-                  <td style="background-color: #1e3a8a; color: white; padding: 30px; text-align: center; font-size: 14px;">
-                    <div style="margin-bottom: 15px;">
-                      <p style="margin: 0; font-size: 14px; opacity: 0.9; font-weight: 500;">The smart way to buy quality items — for less.</p>
-                    </div>
-                    <p style="margin: 15px 0 0 0; font-size: 12px; opacity: 0.8;">This email was sent to ${customerEmail}</p>
-                    <p style="margin: 5px 0 0 0; font-size: 12px; opacity: 0.7;">© 2024 HappyDeel. All rights reserved.</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1 class="header-title">Order Confirmed!</h1>
+            <p class="header-subtitle">Thank you for your purchase</p>
+          </div>
+          
+          <div class="content">
+            <div class="confirmation-card">
+              <div class="confirmation-icon">📦</div>
+              <h2 style="text-align: center; font-size: 24px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Your order has been received</h2>
+              <p style="text-align: center; color: #6b7280; font-size: 16px;">We're preparing your item with care and attention to detail.</p>
+            </div>
+
+            <div class="order-info">
+              <div class="order-title">${productName}</div>
+              <div class="order-detail">Shipping to: ${customerAddress}</div>
+              <div class="order-detail">Order confirmation sent to: ${customerEmail}</div>
+            </div>
+
+            <div class="next-steps">
+              <h3>📋 What happens next?</h3>
+              <div class="step-item">
+                <div class="step-number">1</div>
+                <div class="step-content">Our team will carefully inspect and prepare your item for shipping</div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">2</div>
+                <div class="step-content">You'll receive a shipping notification with tracking details within 2-3 business days</div>
+              </div>
+              <div class="step-item">
+                <div class="step-number">3</div>
+                <div class="step-content">Your package will be delivered within 3-5 business days after shipping</div>
+              </div>
+            </div>
+
+            <div class="delivery-info">
+              <h3>📅 Delivery Information</h3>
+              <p>We'll send you tracking information as soon as your order ships. All items receive extra care during our inspection process.</p>
+            </div>
+          </div>
+          
+          <div class="footer">
+            <div class="footer-content">
+              <h3>Need Help?</h3>
+              <p>If you have any questions about your order, our customer service team is here to help.</p>
+              <div class="contact-info">
+                <a href="mailto:support@happydeel.com" class="contact-link">📧 Email Support</a>
+                <a href="tel:+17176484487" class="contact-link">📞 +17176484487</a>
+              </div>
+              <div class="copyright">
+                © 2024 HappyDeel. All rights reserved.<br>
+                The smart way to buy quality items — for less.
+              </div>
+            </div>
+          </div>
+        </div>
       </body>
       </html>
     `;
 
     // Plain text version
     const textTemplate = `
-      Thank You for Your Purchase!
+      Order Confirmed!
       
-      Dear Customer,
+      Thank you for your purchase.
       
-      Thank you for choosing Happydeel! We're excited to confirm that we've received your order and it's being prepared for shipment.
+      Your order for "${productName}" has been received. We're preparing your item with care and attention to detail.
       
-      Order Details:
-      Product: ${productName}
-      Delivery Address: ${customerAddress}
+      Shipping to: ${customerAddress}
+      Order confirmation sent to: ${customerEmail}
       
       What happens next?
-      - Your order is now being processed by our team
-      - We'll carefully inspect and package your item
-      - In 2-3 business days, you'll receive another email with your tracking number
-      - Once shipped, you can track your package in real-time
+      1. Our team will carefully inspect and prepare your item for shipping.
+      2. You'll receive a shipping notification with tracking details within 2-3 business days.
+      3. Your package will be delivered within 3-5 business days after shipping.
       
-      If you have any questions about your order, please don't hesitate to contact our support team.
+      Delivery Information:
+      We'll send you tracking information as soon as your order ships. All items receive extra care during our inspection process.
       
-      Thank you for choosing Happydeel!
+      Need Help?
+      If you have any questions about your order, our customer service team is here to help.
+      Email Support: support@happydeel.com
+      Phone: +17176484487
       
-      Best regards,
-      The Happydeel Team
-      
-      ---
-      Happydeel • Premium Pre-Owned Technology
-      This email was sent to ${customerEmail}
+      © 2024 HappyDeel. All rights reserved.
+      The smart way to buy quality items — for less.
     `;
 
     // Email options

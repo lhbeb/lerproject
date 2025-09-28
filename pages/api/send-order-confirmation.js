@@ -6,14 +6,16 @@ let transporter = null;
 function getTransporter() {
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // Use SSL
+      pool: true, // Use connection pooling
+      maxConnections: 5, // Maximum concurrent connections
+      maxMessages: 100, // Maximum messages per connection
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
+        user: 'contacthappydeel@gmail.com',
+        pass: 'pqdc drxx ltlo xapr',
       },
-      pool: true,
-      maxConnections: 5,
-      maxMessages: 100,
     });
   }
   return transporter;
@@ -198,7 +200,7 @@ export default async function handler(req, res) {
 
     // Email options
     const mailOptions = {
-      from: `"Happydeel" <${process.env.GMAIL_USER}>`,
+      from: `"Happydeel" <contacthappydeel@gmail.com>`,
       to: customerEmail,
       subject: `Order Confirmation - ${productName} 🎉`,
       html: htmlTemplate,

@@ -112,21 +112,11 @@ export default async function handler(req, res) {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
           }
           .header { 
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); 
+            background-color: #1e3a8a; 
             color: white; 
             padding: 48px 32px; 
             text-align: center; 
             position: relative;
-          }
-          .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
           }
           .header-title { 
             font-size: 32px; 
@@ -146,35 +136,13 @@ export default async function handler(req, res) {
             padding: 48px 32px; 
           }
           .confirmation-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background-color: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
             padding: 32px;
             margin-bottom: 32px;
             position: relative;
             overflow: hidden;
-          }
-          .confirmation-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #1e3a8a, #3b82f6, #ffef02);
-          }
-          .confirmation-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            color: white;
-            font-size: 28px;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
           }
           .order-info {
             background: white;
@@ -209,28 +177,12 @@ export default async function handler(req, res) {
             color: #1f2937;
             margin-bottom: 16px;
           }
-          .step-item {
-            display: flex;
-            align-items: flex-start;
+          .step-item-box {
             margin-bottom: 12px;
             padding: 12px;
             background: #f8fafc;
             border-radius: 8px;
             border-left: 3px solid #3b82f6;
-          }
-          .step-number {
-            background: #3b82f6;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 12px;
-            flex-shrink: 0;
           }
           .step-content {
             color: #374151;
@@ -239,7 +191,7 @@ export default async function handler(req, res) {
           }
           .delivery-info {
             background: #fef3c7;
-            border: 1px solid #ffef02;
+            border: 1px solid #fcd34d;
             border-radius: 12px;
             padding: 24px;
             margin-bottom: 32px;
@@ -272,21 +224,11 @@ export default async function handler(req, res) {
             font-size: 14px; 
             margin-bottom: 16px; 
           }
-          .contact-info { 
-            display: flex; 
-            justify-content: center; 
-            gap: 24px; 
-            margin-bottom: 24px; 
-            flex-wrap: wrap;
-          }
           .contact-link { 
             color: #3b82f6; 
             text-decoration: none; 
             font-weight: 500; 
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
           }
           .contact-link:hover { 
             color: #1e3a8a; 
@@ -295,6 +237,17 @@ export default async function handler(req, res) {
             color: #9ca3af; 
             font-size: 12px; 
             line-height: 1.5; 
+          }
+          @media screen and (max-width: 480px) {
+            .contact-item {
+              display: block !important;
+              width: 100% !important;
+              max-width: 100% !important;
+              padding: 8px 0 !important;
+            }
+            .content {
+              padding: 32px 24px !important;
+            }
           }
         </style>
       </head>
@@ -307,7 +260,13 @@ export default async function handler(req, res) {
           
           <div class="content">
             <div class="confirmation-card">
-              <div class="confirmation-icon">📦</div>
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto 24px;">
+                <tr>
+                  <td align="center" bgcolor="#3b82f6" style="width: 64px; height: 64px; line-height: 64px; font-size: 28px; color: #ffffff; border-radius: 32px;">
+                    📦
+                  </td>
+                </tr>
+              </table>
               <h2 style="text-align: center; font-size: 24px; font-weight: 600; color: #1f2937; margin-bottom: 16px;">Your order has been received</h2>
               <p style="text-align: center; color: #6b7280; font-size: 16px;">We're preparing your item with care and attention to detail.</p>
             </div>
@@ -320,17 +279,59 @@ export default async function handler(req, res) {
 
             <div class="next-steps">
               <h3>📋 What happens next?</h3>
-              <div class="step-item">
-                <div class="step-number">1</div>
-                <div class="step-content">Our team will carefully inspect and prepare your item for shipping</div>
+              <div class="step-item-box">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top" style="width: 36px; padding-right: 12px;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td align="center" bgcolor="#3b82f6" style="width: 24px; height: 24px; line-height: 24px; font-size: 12px; font-weight: 600; color: #ffffff; border-radius: 12px;">
+                            1
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td valign="middle" class="step-content">
+                      Our team will carefully inspect and prepare your item for shipping
+                    </td>
+                  </tr>
+                </table>
               </div>
-              <div class="step-item">
-                <div class="step-number">2</div>
-                <div class="step-content">You'll receive a shipping notification with tracking details within 2-3 business days</div>
+              <div class="step-item-box">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top" style="width: 36px; padding-right: 12px;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td align="center" bgcolor="#3b82f6" style="width: 24px; height: 24px; line-height: 24px; font-size: 12px; font-weight: 600; color: #ffffff; border-radius: 12px;">
+                            2
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td valign="middle" class="step-content">
+                      You'll receive a shipping notification with tracking details within 2-3 business days
+                    </td>
+                  </tr>
+                </table>
               </div>
-              <div class="step-item">
-                <div class="step-number">3</div>
-                <div class="step-content">Your package will be delivered within 3-5 business days after shipping</div>
+              <div class="step-item-box">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td valign="top" style="width: 36px; padding-right: 12px;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td align="center" bgcolor="#3b82f6" style="width: 24px; height: 24px; line-height: 24px; font-size: 12px; font-weight: 600; color: #ffffff; border-radius: 12px;">
+                            3
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td valign="middle" class="step-content">
+                      Your package will be delivered within 3-5 business days after shipping
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
 
@@ -344,10 +345,48 @@ export default async function handler(req, res) {
             <div class="footer-content">
               <h3>Need Help?</h3>
               <p>If you have any questions about your order, our customer service team is here to help.</p>
-              <div class="contact-info">
-                <a href="mailto:support@happydeel.com" class="contact-link">📧 Email Support</a>
-                <a href="tel:+17176484487" class="contact-link">📞 +17176484487</a>
-              </div>
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
+                <tr>
+                  <td align="center">
+                    <!--[if mso]>
+                    <table role="presentation" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                    <td align="center" width="220" style="padding: 0 10px;">
+                    <![endif]-->
+                    <div class="contact-item" style="display: inline-block; width: 100%; max-width: 220px; vertical-align: top;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                          <td align="center" style="padding: 5px;">
+                            <a href="mailto:support@happydeel.com" class="contact-link" style="display: inline-block;">
+                              <span style="vertical-align: middle;">📧</span> Email Support
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--[if mso]>
+                    </td>
+                    <td align="center" width="220" style="padding: 0 10px;">
+                    <![endif]-->
+                    <div class="contact-item" style="display: inline-block; width: 100%; max-width: 220px; vertical-align: top;">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                          <td align="center" style="padding: 5px;">
+                            <a href="tel:+17176484487" class="contact-link" style="display: inline-block;">
+                              <span style="vertical-align: middle;">📞</span> +17176484487
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                  </td>
+                </tr>
+              </table>
               <div class="copyright">
                 © 2024 HappyDeel. All rights reserved.<br>
                 The smart way to buy quality items — for less.
